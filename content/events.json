@@ -1,1 +1,97 @@
-[]
+[
+  {
+    "id": "abhishek-raghuram-inaugural-2026",
+    "title": "Grand Inaugural Concert",
+    "artists": [
+      "Sri Abhishek Raghuram (Vocal)",
+      "Sri Kamalakiran Vinjamuri (Violin)",
+      "Sri Patri Satish Kumar (Mridangam)",
+      "Sri Ravi Balasubramanian (Ghatam)"
+    ],
+    "date": "2026-06-07T16:00:00-07:00",
+    "endDate": "2026-06-07T19:00:00-07:00",
+    "venue": "Lakireddy Hall, Livermore Hindu Temple",
+    "address": "1232 Arrowhead Ave, Livermore, CA 94551",
+    "city": "Livermore, CA",
+    "description": "Raaga Sudha Sabha opened its first season with a full-length kutcheri by Sri Abhishek Raghuram, accompanied by a formidable ensemble. A packed Lakireddy Hall heard an expansive Todi and a Ragam-Tanam-Pallavi that ran well past the scheduled hour.",
+    "image": "/events/past/June7th-Flyer.jpeg",
+    "ticketUrl": null,
+    "status": "past",
+    "ticketing": "closed",
+    "tiers": []
+  },
+  {
+    "id": "vishnudev-vocal-2026",
+    "title": "Vocal Concert by Vishnudev",
+    "artists": ["Vishnudev (Vocal)"],
+    "date": "2026-10-10T17:00:00-07:00",
+    "endDate": "2026-10-10T20:00:00-07:00",
+    "venue": "Lakireddy Hall, Livermore Hindu Temple",
+    "address": "1232 Arrowhead Ave, Livermore, CA 94551",
+    "city": "Livermore, CA",
+    "description": "A full-length Carnatic vocal recital presented by Raaga Sudha Sabha.",
+    "image": "/events/upcoming/vishnudev-flyer.svg",
+    "ticketUrl": null,
+    "status": "upcoming",
+    "ticketing": "open",
+    "tiers": [
+      {
+        "id": "adult",
+        "name": "Adult Ticket",
+        "description": "General admission, open seating.",
+        "priceCents": 4000,
+        "capacity": 150,
+        "maxPerOrder": 10
+      },
+      {
+        "id": "senior-student",
+        "name": "Senior / Student Ticket",
+        "description": "Ages 62+ or with a valid student ID.",
+        "priceCents": 2500,
+        "capacity": 100,
+        "maxPerOrder": 10
+      },
+      {
+        "id": "patron",
+        "name": "Patron Ticket",
+        "description": "Reserved front-section seating. The amount above the ticket price is a tax-deductible contribution.",
+        "priceCents": 10000,
+        "capacity": 30,
+        "maxPerOrder": 6
+      }
+    ]
+  },
+  {
+    "id": "kiran-nivi-vocal-2026",
+    "title": "Vocal Concert by Kiran & Nivi",
+    "artists": ["Kiran (Vocal)", "Nivi (Vocal)"],
+    "date": "2026-11-14T17:00:00-08:00",
+    "endDate": "2026-11-14T20:00:00-08:00",
+    "venue": "Lakireddy Hall, Livermore Hindu Temple",
+    "address": "1232 Arrowhead Ave, Livermore, CA 94551",
+    "city": "Livermore, CA",
+    "description": "A Carnatic vocal duet presented by Raaga Sudha Sabha.",
+    "image": "/events/upcoming/kiran-nivi-flyer.svg",
+    "ticketUrl": null,
+    "status": "upcoming",
+    "ticketing": "open",
+    "tiers": [
+      {
+        "id": "general",
+        "name": "General Admission",
+        "description": "Open seating.",
+        "priceCents": 3000,
+        "capacity": 180,
+        "maxPerOrder": 10
+      },
+      {
+        "id": "student",
+        "name": "Student Ticket",
+        "description": "With a valid student ID, presented at the door.",
+        "priceCents": 1500,
+        "capacity": 60,
+        "maxPerOrder": 10
+      }
+    ]
+  }
+]

@@ -26,25 +26,57 @@ The static build emits everything to `./out`. Any static host can serve it.
 ## Project layout
 
 ```
-app/                  routes (App Router)
-  layout.tsx          fonts, nav, footer, persistent Tyagaraja band, OG/metadata
-  page.tsx            Home — hero, mission, four pillars, featured event, Endaro quote
-  events/page.tsx     Events — upcoming + past, filterable by year
-  about/page.tsx      Mission, history, board placeholder, 501(c)(3) info
-  archive/page.tsx    Coming-soon archive landing
-  contact/page.tsx    Form, email, address, socials
-  sitemap.ts          /sitemap.xml
-  robots.ts           /robots.txt
-components/           UI components (server + client islands)
-content/events.json   Source-of-truth events feed
-lib/events.ts         Typed accessors over events.json
-public/               Static assets
-raagasudha.github.io/ READ-ONLY reference snapshot of the parent site
+app/                    routes (App Router)
+  layout.tsx            fonts, nav, footer, cart provider, OG/metadata
+  page.tsx              Home — hero, mission, pillars, upcoming events, Endaro quote
+  events/page.tsx       Events — upcoming (featured + grid) and past (by year)
+  events/[slug]/        Per-event detail page with the ticket-tier picker
+  cart/page.tsx         Shopping cart
+  checkout/page.tsx     Buyer details + PayPal / Venmo / card payment
+  order/page.tsx        Post-payment confirmation
+  checkin/page.tsx      Volunteer QR scanner for door check-in
+  about/ archive/ contact/
+  sitemap.ts            /sitemap.xml
+  robots.ts             /robots.txt
+components/             UI components (server + client islands)
+content/events.json     Source-of-truth events + ticket tiers
+lib/events.ts           Typed accessors, money + date formatting
+lib/cart.tsx            Cart context, localStorage-backed
+lib/availability.ts     Live remaining-seat counts from the Worker
+lib/commerce-config.ts  PayPal + Worker configuration
+worker/                 Cloudflare Worker: pricing, inventory, PayPal
+public/                 Static assets
+raagasudha.github.io/   READ-ONLY reference snapshot of the parent site
 ```
 
 ## Editing content
 
-- **Events** — edit [content/events.json](content/events.json). Schema: `id`, `title`, `artists[]`, `date` (ISO 8601), `venue`, `city`, `description`, `image`, `ticketUrl`, `status` ("upcoming" | "past"). The home page automatically pulls the next upcoming event as the Featured concert.
+- **Events** — edit [content/events.json](content/events.json). One object per concert:
+
+  | Field | Notes |
+  |---|---|
+  | `id` | Also the URL slug — `/events/<id>`. Don't change it after tickets are sold; it keys the inventory counters. |
+  | `title`, `artists[]`, `description` | Copy shown on cards and the detail page. |
+  | `date`, `endDate` | ISO 8601 **with offset**, e.g. `2026-10-10T17:00:00-07:00`. Use `-07:00` for PDT, `-08:00` for PST. |
+  | `venue`, `address`, `city` | Location block. |
+  | `image` | Flyer path under `public/`, or `null` for a generated placeholder. |
+  | `status` | `"upcoming"` or `"past"` — this alone moves an event between the two sections. |
+  | `ticketing` | `"open"` (cart live), `"closed"`, `"free"` (RSVP flow), `"none"`. |
+  | `tiers[]` | Ticket types — see below. Empty for free/past events. |
+  | `ticketUrl` | Only for events ticketed by an outside partner. |
+
+  Each entry in `tiers[]`:
+
+  | Field | Notes |
+  |---|---|
+  | `id` | Stable per event — keys the inventory counter. |
+  | `name`, `description` | e.g. "Senior / Student Ticket". |
+  | `priceCents` | **Integer cents.** `4000` is $40.00. Never a decimal. |
+  | `capacity` | Seats in this tier, or `null` for uncapped. |
+  | `maxPerOrder` | Ceiling on the quantity stepper. |
+
+  **After a concert:** flip its `status` to `"past"` and `ticketing` to `"closed"`.
+  The home page pulls the next `"upcoming"` event automatically.
 - **Page copy** — edit the page file directly (e.g. [app/about/page.tsx](app/about/page.tsx)).
 - **Placeholders to swap** — see [CONTENT.md](CONTENT.md) for the full inventory.
 
@@ -98,11 +130,72 @@ The site is a fully static export. The `out/` directory is the deployable artifa
 1. Import the repo. Vercel detects Next.js automatically.
 2. Because the site uses `output: 'export'`, Vercel will serve the static export — no serverless runtime billed.
 
-## Wiring up the placeholder integrations
+## Ticketing & payments
+
+Tickets are sold through **PayPal Commerce**, which covers PayPal, Venmo,
+Pay Later and guest credit/debit card in a single integration. Confirmed
+501(c)(3) organisations pay **1.99% + $0.49** instead of 2.89% + $0.49 —
+apply at <https://www.paypal.com/us/webapps/mpp/nonprofit>.
+
+### How it fits together
+
+```
+Browser                        Cloudflare Worker              PayPal
+───────                        ─────────────────              ──────
+tier picker  ──add──▶ cart
+cart (localStorage)
+     │
+     │  POST /orders
+     │  {eventId, tierId, qty}  ──▶ re-price from catalog
+     │      (no amounts!)           check inventory (KV)
+     │                              hold seats (20 min TTL)
+     │                                    │  create order  ──▶
+     │  ◀──────────── order id ───────────┘
+     │
+     ├─ buyer pays in PayPal's iframe ──────────────────────▶
+     │
+     │  POST /orders/:id/capture ──▶ capture ────────────────▶
+     │                              verify amount matches
+     │                              commit inventory
+     │                              POST order to Apps Script
+     │  ◀──────── reference ────────┘        (email + QR)
+     ▼
+/order confirmation
+```
+
+**The browser never sends a price.** It sends only what was ordered; the
+Worker re-prices every line from its own bundled copy of `events.json` and
+verifies the captured amount before tickets are issued. This is the whole
+reason the Worker exists — a static site cannot enforce a price or keep a
+secret.
+
+### Setup
+
+Full instructions in [worker/README.md](worker/README.md). In short:
+
+1. Deploy the Worker (`cd worker && npx wrangler deploy`) with a KV namespace
+   and `PAYPAL_CLIENT_SECRET` set via `wrangler secret put`.
+2. In [lib/commerce-config.ts](lib/commerce-config.ts), set `COMMERCE_API_URL`
+   to the Worker URL and `PAYPAL_CLIENT_ID` to your **public** client id.
+3. Set `PAYPAL_ENV` to `"live"` when you're done testing in sandbox.
+
+Until step 1 is done the tier pickers still render, the cart works, and the
+payment step shows a graceful "payment unavailable" notice. Remaining-seat
+counts stay hidden until the Worker can supply real numbers.
+
+Switches in `lib/commerce-config.ts`:
+
+| Flag | Effect |
+|---|---|
+| `TICKETING_ENABLED` | `false` replaces all buy controls with "tickets open soon". |
+| `SHOW_REMAINING` | `false` hides "N tickets remaining" without stopping sales. |
+| `LOW_STOCK_THRESHOLD` | Below this, the badge switches to "Only N left". |
+
+## Wiring up the remaining placeholder integrations
 
 Search the codebase for `// TODO:` to find every placeholder. The big ones:
 
-- **Donation link** — currently `#donate`. Set in [components/site-nav.tsx](components/site-nav.tsx) and [app/page.tsx](app/page.tsx). Point at Stripe Checkout / PayPal / Donorbox.
+- **Donation link** — still disabled in [components/donate-button.tsx](components/donate-button.tsx). The PayPal account set up for ticketing can also take donations; point this at a PayPal donate link or reuse the checkout flow.
 - **Newsletter signup** — currently no-op. [components/newsletter-form.tsx](components/newsletter-form.tsx). Wire to Mailchimp / Buttondown / ConvertKit.
 - **Contact form** — currently no-op. [components/contact-form.tsx](components/contact-form.tsx). Easiest path: Formspree or Netlify Forms (works out of the box on Netlify with the `data-netlify="true"` attribute).
 - **Email, mailing address, EIN, social URLs** — see [CONTENT.md](CONTENT.md).

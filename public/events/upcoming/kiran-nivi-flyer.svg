@@ -1,0 +1,35 @@
+<svg viewBox="0 0 850 1100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vocal Concert by Kiran and Nivi — presented by Raaga Sudha Sabha">
+  <rect width="850" height="1100" fill="#F4ECDD"/>
+  <rect x="40" y="40" width="770" height="1020" fill="none" stroke="#EAC5D2" stroke-width="2"/>
+
+  <!-- top ornament -->
+  <line x1="220" y1="180" x2="410" y2="180" stroke="#B08838" stroke-width="1"/>
+  <circle cx="425" cy="180" r="5" fill="none" stroke="#B08838" stroke-width="1"/>
+  <line x1="440" y1="180" x2="630" y2="180" stroke="#B08838" stroke-width="1"/>
+
+  <text x="425" y="255" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="32" font-style="italic" fill="#7A007F" font-weight="500">Raaga Sudha Sabha</text>
+  <text x="425" y="295" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#7A6A56" letter-spacing="4">PRESENTS</text>
+
+  <!-- title -->
+  <text x="425" y="430" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="58" fill="#6B1F2A" font-weight="600" letter-spacing="4">VOCAL CONCERT</text>
+
+  <line x1="330" y1="480" x2="520" y2="480" stroke="#B08838" stroke-width="1"/>
+
+  <!-- artists -->
+  <text x="425" y="580" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="30" font-style="italic" fill="#7A6A56">by</text>
+  <text x="425" y="660" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="62" font-style="italic" fill="#7A007F" font-weight="600">Kiran &#38; Nivi</text>
+
+  <line x1="330" y1="730" x2="520" y2="730" stroke="#EAC5D2" stroke-width="1"/>
+
+  <!-- details -->
+  <text x="425" y="810" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#2A1B14" letter-spacing="2">NOVEMBER 14, 2026 &#183; 5:00 PM</text>
+  <text x="425" y="850" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="15" fill="#7A6A56">Lakireddy Hall, Livermore Hindu Temple</text>
+  <text x="425" y="878" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="15" fill="#7A6A56">Livermore, CA</text>
+
+  <!-- footer ornament -->
+  <line x1="220" y1="950" x2="410" y2="950" stroke="#B08838" stroke-width="1"/>
+  <circle cx="425" cy="950" r="5" fill="none" stroke="#B08838" stroke-width="1"/>
+  <line x1="440" y1="950" x2="630" y2="950" stroke="#B08838" stroke-width="1"/>
+
+  <text x="425" y="1000" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#7A6A56" letter-spacing="2">TICKETS AT RAAGASUDHASABHA.ORG</text>
+</svg>

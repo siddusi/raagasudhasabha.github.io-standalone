@@ -1,33 +1,43 @@
 /**
- * Configuration for the current "next concert" — flyer and RSVP.
+ * RSVP configuration for *free* events.
  *
- * Set FLYER_SRC to null when there is no current flyer to show; both the
- * /events page and the home-page upcoming-events section will then render
- * an empty state instead.
+ * Concerts are now data-driven: every event, its flyer and its ticket tiers
+ * live in content/events.json, and paid events run through the cart and
+ * PayPal checkout (see lib/commerce-config.ts). This file only covers the
+ * remaining free-admission case, where we collect an RSVP through a Google
+ * Form instead of taking payment.
  *
- * To swap in a new flyer:
- *   1. Drop the image at e.g. public/events/2026-09-flyer.png
- *   2. Update FLYER_SRC to "/events/2026-09-flyer.png"
- *   3. Update FLYER_ALT to a one-sentence description (used for screen
- *      readers and SEO).
- *
- * To enable RSVPs (Google Forms-backed):
+ * To use it, set an event's "ticketing" to "free" in content/events.json and
+ * point RSVP_GOOGLE_FORM_URL at the form:
  *   1. Build a Google Form (responses can flow into a Google Sheet).
  *   2. Click Send → the <> embed tab → copy the URL from the iframe src,
  *      or just paste the form's normal "viewform" link below.
- *   3. Paste it into RSVP_GOOGLE_FORM_URL and set RSVP_OPEN = true.
- *   4. (Optional) set RSVP_EVENT_LABEL to a short string shown above the form,
- *      e.g. "Sanjay Subrahmanyan — September 12, 2026".
+ *   3. Set RSVP_OPEN = true.
+ *   4. (Optional) set RSVP_EVENT_LABEL to a short string shown above the
+ *      form, e.g. "Sanjay Subrahmanyan — September 12, 2026".
  *
  * Setting RSVP_OPEN = false (or RSVP_GOOGLE_FORM_URL = "") hides all RSVP
  * buttons site-wide; useful between concerts.
  */
-export const FLYER_SRC: string | null = "/events/June7th-Flyer.jpeg";
+/**
+ * Season interlude.
+ *
+ * While true, the home page and the Upcoming Events page show a single
+ * "stay tuned" banner in place of the concert posters, and unannounced
+ * concerts are kept out of the sitemap.
+ *
+ * Nothing is deleted to do this — the concerts stay in content/events.json
+ * exactly as they are, and their detail pages still build. Set this back to
+ * false to restore the posters precisely as they were.
+ */
+export const UPCOMING_BANNER_ONLY = true;
 
-export const FLYER_ALT =
-  "Grand Inaugural Concert flyer — Sri Abhishek Raghuram (Vocal) with Sri Patri Satish Kumar (Mridangam), Sri Kamalakiran Vinjamuri (Violin), Sri Ravi Balasubramanian (Ghatam). Sunday, June 7, 2026, 4:00 PM PDT at Lakireddy Hall, Livermore Hindu Temple.";
+export const UPCOMING_BANNER_MESSAGE =
+  "Please stay tuned for the next event!";
 
 export const RSVP_GOOGLE_FORM_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSeCNbW_niJtQP2VTVBYSFW3nDSnhGcC_JUac0TcAf83_VT88g/viewform";
+
 export const RSVP_OPEN = true;
-export const RSVP_EVENT_LABEL = "Sri Abhishek Raghuram · Sunday, June 7, 2026";
+
+export const RSVP_EVENT_LABEL = "";

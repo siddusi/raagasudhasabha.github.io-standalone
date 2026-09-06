@@ -2,22 +2,14 @@ import Link from "next/link";
 import { Music, Archive, Sparkles } from "lucide-react";
 import { PillarCard } from "@/components/pillar-card";
 import { EventCard } from "@/components/event-card";
-import { EventFlyer } from "@/components/event-flyer";
 import { Ornament } from "@/components/ornament";
 import { DonateButton } from "@/components/donate-button";
-import { RsvpModal } from "@/components/rsvp-modal";
+import { UpcomingBanner } from "@/components/upcoming-banner";
 import { getUpcoming } from "@/lib/events";
-import {
-  FLYER_SRC,
-  FLYER_ALT,
-  RSVP_OPEN,
-  RSVP_GOOGLE_FORM_URL,
-  RSVP_EVENT_LABEL,
-} from "@/lib/upcoming";
+import { UPCOMING_BANNER_ONLY } from "@/lib/upcoming";
 
 export default function HomePage() {
   const upcoming = getUpcoming();
-  const hasFlyer = !!FLYER_SRC;
 
   return (
     <>
@@ -39,35 +31,8 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {hasFlyer ? (
-            <div className="grid items-center gap-10 lg:grid-cols-12">
-              <div className="lg:col-span-7">
-                <EventFlyer src={FLYER_SRC!} alt={FLYER_ALT} size="compact" />
-              </div>
-              <div className="lg:col-span-5">
-                <p className="font-display text-2xl italic text-brand-purple md:text-3xl">
-                  Our next concert is on the way.
-                </p>
-                <p className="mt-4 text-lg leading-relaxed text-ink/85">
-                  Click the flyer to see it at full size, then visit the events
-                  page for the full programme as it&rsquo;s announced.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  {RSVP_OPEN && (
-                    <RsvpModal
-                      formUrl={RSVP_GOOGLE_FORM_URL}
-                      eventLabel={RSVP_EVENT_LABEL}
-                    />
-                  )}
-                  <Link
-                    href="/events"
-                    className="smallcaps inline-flex min-h-12 items-center border border-maroon/70 px-6 py-3 text-maroon transition hover:bg-maroon/10"
-                  >
-                    See event details →
-                  </Link>
-                </div>
-              </div>
-            </div>
+          {UPCOMING_BANNER_ONLY ? (
+            <UpcomingBanner />
           ) : upcoming.length > 0 ? (
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
               {upcoming.slice(0, 3).map((e) => (

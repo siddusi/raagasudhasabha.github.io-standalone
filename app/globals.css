@@ -11,6 +11,14 @@
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    /*
+     * The site nav is `sticky top-0` and tall — logo, wordmark and the
+     * tax-exempt line stack to roughly 158px. Without this, any in-page
+     * anchor (e.g. /events/<id>#tickets) lands with its heading hidden
+     * behind the header. Keep this a little above the real header height.
+     */
+    scroll-padding-top: 11rem;
   }
 
   body {
