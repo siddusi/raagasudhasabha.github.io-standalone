@@ -8,3 +8,4 @@ raagasudha.github.io/
 .env
 .env.local
 .env.*.local
+*.tsbuildinfo

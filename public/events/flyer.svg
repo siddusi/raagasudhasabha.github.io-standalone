@@ -14,6 +14,6 @@
   <text x="425" y="700" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="28" font-style="italic" fill="#2A1B14">Flyer placeholder</text>
 
   <line x1="320" y1="900" x2="530" y2="900" stroke="#EAC5D2" stroke-width="1"/>
-  <text x="425" y="950" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#7A6A56" letter-spacing="2">REPLACE THIS FILE WITH THE CONCERT FLYER</text>
-  <text x="425" y="980" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#7A6A56">public/events/flyer.png</text>
+  <text x="425" y="950" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#7A6A56" letter-spacing="2">TEMPLATE &#8212; COPY, DO NOT EDIT IN PLACE</text>
+  <text x="425" y="980" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#7A6A56">public/events/upcoming/&#8249;name&#8250;-flyer.svg</text>
 </svg>

@@ -1,0 +1,29 @@
+name = "rss-tickets"
+main = "src/index.js"
+compatibility_date = "2024-10-01"
+
+# Remaining-seat counters and short-lived checkout reservations.
+# Create with:  npx wrangler kv namespace create TICKETS
+# then paste the returned id below.
+[[kv_namespaces]]
+binding = "TICKETS"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+
+[vars]
+# "sandbox" while testing, "live" for real money.
+PAYPAL_ENV = "sandbox"
+
+# Public PayPal client id — the matching secret is set with `wrangler secret`.
+PAYPAL_CLIENT_ID = "REPLACE_WITH_YOUR_PAYPAL_CLIENT_ID"
+
+# Lock CORS to the live site. Use "*" only while developing locally.
+ALLOWED_ORIGIN = "https://www.raagasudhasabha.org"
+
+# Optional: existing Apps Script /exec URL that emails tickets and records
+# the order in the Google Sheet the /checkin scanner reads. Leave unset to
+# skip fulfilment (payments still work; you just reconcile by hand).
+# FULFILLMENT_URL = "https://script.google.com/macros/s/XXXX/exec"
+
+# Secrets — never put these in this file. Set them with:
+#   npx wrangler secret put PAYPAL_CLIENT_SECRET
+#   npx wrangler secret put FULFILLMENT_SECRET

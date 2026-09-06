@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Inter } from "next/font/google";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { TyagarajaRail } from "@/components/tyagaraja-rail";
+import { CartProvider } from "@/lib/cart";
 import "./globals.css";
 
 const display = Cormorant_Garamond({
@@ -51,12 +52,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <SiteNav />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <TyagarajaRail />
-        <SiteFooter />
+        <CartProvider>
+          <SiteNav />
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+          <TyagarajaRail />
+          <SiteFooter />
+        </CartProvider>
       </body>
     </html>
   );

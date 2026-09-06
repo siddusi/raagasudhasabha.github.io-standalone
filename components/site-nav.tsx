@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Wordmark } from "@/components/wordmark";
 import { DonateButton } from "@/components/donate-button";
+import { CartBadge } from "@/components/cart-badge";
 
 const links = [
   { href: "/", label: "Home" },
@@ -60,6 +61,7 @@ export function SiteNav() {
                   </Link>
                 ))}
                 <DonateButton variant="nav">Donate</DonateButton>
+                <CartBadge />
               </nav>
             </div>
 
@@ -68,17 +70,20 @@ export function SiteNav() {
             </p>
           </div>
 
-          {/* MOBILE hamburger */}
-          <button
-            type="button"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            onClick={() => setOpen((v) => !v)}
-            className="flex h-11 w-11 items-center justify-center self-start text-cream md:hidden"
-          >
-            {open ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          {/* MOBILE: cart stays reachable without opening the menu */}
+          <div className="flex items-start gap-1 md:hidden">
+            <CartBadge className="h-11 w-11 justify-center" />
+            <button
+              type="button"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              aria-controls="mobile-nav"
+              onClick={() => setOpen((v) => !v)}
+              className="flex h-11 w-11 items-center justify-center text-cream"
+            >
+              {open ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -104,6 +109,11 @@ export function SiteNav() {
               {l.label}
             </Link>
           ))}
+          <CartBadge
+            showLabel
+            onNavigate={() => setOpen(false)}
+            className="min-h-11 border-b border-cream/15 py-3"
+          />
           <div className="mt-3">
             <DonateButton variant="nav" className="w-full justify-center">
               Donate
