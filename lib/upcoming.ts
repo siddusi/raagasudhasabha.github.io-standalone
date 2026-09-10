@@ -30,7 +30,7 @@
  * exactly as they are, and their detail pages still build. Set this back to
  * false to restore the posters precisely as they were.
  */
-export const UPCOMING_BANNER_ONLY = true;
+export const UPCOMING_BANNER_ONLY = false;
 
 export const UPCOMING_BANNER_MESSAGE =
   "Please stay tuned for the next event!";

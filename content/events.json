@@ -21,77 +21,28 @@
     "tiers": []
   },
   {
-    "id": "vishnudev-vocal-2026",
-    "title": "Vocal Concert by Vishnudev",
-    "artists": ["Vishnudev (Vocal)"],
-    "date": "2026-10-10T17:00:00-07:00",
-    "endDate": "2026-10-10T20:00:00-07:00",
-    "venue": "Lakireddy Hall, Livermore Hindu Temple",
-    "address": "1232 Arrowhead Ave, Livermore, CA 94551",
+    "id": "double-header-vocal-2026",
+    "title": "Double Header Vocal Concert",
+    "artists": [
+      "Kum. Kiran & Kum. Nivi — Sai Sisters (Vocal)",
+      "Vid. Sri K S Vishnudev (Vocal)",
+      "Vid. Sri H N Bhaskar (Violin)",
+      "Vid. Sri Alankode Gokul (Violin)",
+      "Vid. Sri Patri Satish Kumar (Mridangam)",
+      "Vid. Sri K V Prasad (Mridangam)",
+      "Vid. Sri B Sundarkumar (Kanjira)"
+    ],
+    "date": "2026-10-25T12:00:00-07:00",
+    "endDate": null,
+    "timeNote": "Please stay tuned for event timing",
+    "venue": "Mertes Center for the Arts",
+    "address": "3000 Campus Hill Dr, Livermore, CA 94551",
     "city": "Livermore, CA",
-    "description": "A full-length Carnatic vocal recital presented by Raaga Sudha Sabha.",
-    "image": "/events/upcoming/vishnudev-flyer.svg",
+    "description": "An evening of Carnatic artistry in two halves — the Sai Sisters, Kum. Kiran and Kum. Nivi, and Vid. Sri K S Vishnudev, each with a full accompanying ensemble. Ticketing information will be published here soon. For sponsorship or donations, contact Sudha Dusi at 510-449-7602 or Jayaram Manda at 510-449-8108.",
+    "image": "/events/upcoming/double-header-vocal-2026.jpeg",
     "ticketUrl": null,
     "status": "upcoming",
-    "ticketing": "open",
-    "tiers": [
-      {
-        "id": "adult",
-        "name": "Adult Ticket",
-        "description": "General admission, open seating.",
-        "priceCents": 4000,
-        "capacity": 150,
-        "maxPerOrder": 10
-      },
-      {
-        "id": "senior-student",
-        "name": "Senior / Student Ticket",
-        "description": "Ages 62+ or with a valid student ID.",
-        "priceCents": 2500,
-        "capacity": 100,
-        "maxPerOrder": 10
-      },
-      {
-        "id": "patron",
-        "name": "Patron Ticket",
-        "description": "Reserved front-section seating. The amount above the ticket price is a tax-deductible contribution.",
-        "priceCents": 10000,
-        "capacity": 30,
-        "maxPerOrder": 6
-      }
-    ]
-  },
-  {
-    "id": "kiran-nivi-vocal-2026",
-    "title": "Vocal Concert by Kiran & Nivi",
-    "artists": ["Kiran (Vocal)", "Nivi (Vocal)"],
-    "date": "2026-11-14T17:00:00-08:00",
-    "endDate": "2026-11-14T20:00:00-08:00",
-    "venue": "Lakireddy Hall, Livermore Hindu Temple",
-    "address": "1232 Arrowhead Ave, Livermore, CA 94551",
-    "city": "Livermore, CA",
-    "description": "A Carnatic vocal duet presented by Raaga Sudha Sabha.",
-    "image": "/events/upcoming/kiran-nivi-flyer.svg",
-    "ticketUrl": null,
-    "status": "upcoming",
-    "ticketing": "open",
-    "tiers": [
-      {
-        "id": "general",
-        "name": "General Admission",
-        "description": "Open seating.",
-        "priceCents": 3000,
-        "capacity": 180,
-        "maxPerOrder": 10
-      },
-      {
-        "id": "student",
-        "name": "Student Ticket",
-        "description": "With a valid student ID, presented at the door.",
-        "priceCents": 1500,
-        "capacity": 60,
-        "maxPerOrder": 10
-      }
-    ]
+    "ticketing": "none",
+    "tiers": []
   }
 ]

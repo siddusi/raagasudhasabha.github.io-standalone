@@ -34,11 +34,13 @@ export function EventCard({ event, variant = "grid" }: Props) {
         tabIndex={-1}
         aria-hidden="true"
         className={cn(
-          // Concert flyers are tall posters (the June 7 one is 879×1600).
-          // A portrait box keeps the letterboxing minimal; `md:aspect-auto`
-          // lets the featured variant stretch to the row height instead.
+          // Flyers arrive in both orientations (June 7 is 879×1600 portrait,
+          // Oct 25 is 1600×1143 landscape) and the grid needs one uniform box
+          // for every card, so a square splits the letterboxing evenly rather
+          // than stranding half a landscape poster in empty space.
+          // `md:aspect-auto` lets the featured variant stretch to row height.
           "block shrink-0 overflow-hidden bg-cream-deep/40",
-          featured ? "aspect-[3/4] md:aspect-auto md:w-2/5" : "aspect-[3/4]"
+          featured ? "aspect-square md:aspect-auto md:w-2/5" : "aspect-square"
         )}
       >
         {event.image ? (

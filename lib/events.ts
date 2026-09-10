@@ -29,6 +29,8 @@ export type Event = {
   artists: string[];
   date: string;
   endDate: string | null;
+  /** Shown in place of the clock time when the schedule isn't settled yet. */
+  timeNote?: string | null;
   venue: string;
   address: string | null;
   city: string;
@@ -104,6 +106,7 @@ export function formatEventDate(iso: string) {
 
 /** "5:00 PM – 8:00 PM" (or just the start time when there is no end). */
 export function formatEventTime(e: Event): string {
+  if (e.timeNote) return e.timeNote;
   const t = (d: Date) =>
     d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
   const start = t(new Date(e.date));
@@ -121,5 +124,8 @@ export function formatEventDay(e: Event): string {
 
 /** "October 10, 2026 · 5:00 PM – 8:00 PM" */
 export function formatEventRange(e: Event): string {
+  // A card's date line is one short row; the fuller timeNote wording belongs
+  // on the detail page, so an unsettled time collapses to just the day here.
+  if (e.timeNote) return formatEventDay(e);
   return `${formatEventDay(e)} · ${formatEventTime(e)}`;
 }

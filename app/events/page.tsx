@@ -3,7 +3,7 @@ import { EventCard } from "@/components/event-card";
 import { EventsList } from "@/components/events-list";
 import { PageHeader, EmptyState } from "@/components/page-header";
 import { UpcomingBanner } from "@/components/upcoming-banner";
-import { getUpcoming, getPast } from "@/lib/events";
+import { getUpcoming, getPast, isTicketed } from "@/lib/events";
 import { SUPPORT_EMAIL } from "@/lib/commerce-config";
 import { UPCOMING_BANNER_ONLY } from "@/lib/upcoming";
 
@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 export default function EventsPage() {
   const upcoming = getUpcoming();
   const past = getPast();
+  const onSale = upcoming.filter(isTicketed).length;
 
   return (
     <>
@@ -32,11 +33,14 @@ export default function EventsPage() {
             <h2 className="font-display text-display-md text-maroon">
               Upcoming
             </h2>
-            {/* No "N on sale" count while the concerts are held back. */}
-            {!UPCOMING_BANNER_ONLY && upcoming.length > 0 && (
+            {/*
+              Counts only concerts whose tickets are actually live — an
+              announced concert with ticketing still to come must not be
+              billed as "on sale".
+            */}
+            {!UPCOMING_BANNER_ONLY && onSale > 0 && (
               <span className="smallcaps text-muted">
-                {upcoming.length}{" "}
-                {upcoming.length === 1 ? "concert" : "concerts"} on sale
+                {onSale} {onSale === 1 ? "concert" : "concerts"} on sale
               </span>
             )}
           </div>
